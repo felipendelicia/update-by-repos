@@ -14,20 +14,20 @@ repo_path = config.app.repoPath
 running_port = config.app.runningPort
 child_process = None
 
-def run_command(command, args=[], options={}):
+def run_command(command, options={}):
     if platform.system() == 'Windows':
-        process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, **options)
-        return process
-    elif platform.system() == 'Darwin':
-        command_args = ['open', '-a', 'Terminal', command] + args
+        command_args = [command]
+    
     elif platform.system() == 'Linux':
-        command_args = ['gnome-terminal', '--', 'bash', '-c', command] + args
+        command_args = ['gnome-terminal', '--', 'bash', '-c', command]
+
     else:
         print("Sistema operativo no soportado.")
         return None
 
     process = subprocess.Popen(command_args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, **options)
     stdout, stderr = process.communicate()
+
     if stdout:
         print(f"stdout: {stdout.decode('utf-8')}")
     if stderr:
@@ -72,7 +72,7 @@ def kill_processes_on_port(port):
 def init_app():
     print(f"STARTING {config.github.repoName} ##################################")
     global child_process
-    child_process = run_command(config.app.runCommand,[], options={'cwd': repo_path})
+    child_process = run_command(config.app.runCommand, options={'cwd': repo_path})
 
 def delete_folder(folder_path):
     try:
@@ -86,11 +86,11 @@ def delete_build_folder():
 
 def pull_app():
     print("PULLING CHANGES ###################################")
-    run_command('git pull',[], options={'cwd': repo_path})
+    run_command('git pull', options={'cwd': repo_path})
 
 def build_app():
     print("BUILDING CHANGES ###################################")
-    run_command('npm run build',[], options={'cwd': repo_path})
+    run_command('npm run build', options={'cwd': repo_path})
 
 async def loop():
     is_updated = await check_changes()
