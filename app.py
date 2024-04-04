@@ -16,7 +16,7 @@ child_process = None
 
 def run_command(command, options={}):
     if platform.system() == 'Windows':
-        command_args = command
+        command_args = 'cmd.exe' + " " + '/c' + " " + command
     
     elif platform.system() == 'Linux':
         command_args = ['gnome-terminal', '--', 'bash', '-c', command]
