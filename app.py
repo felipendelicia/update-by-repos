@@ -14,9 +14,23 @@ repo_path = config.app.repoPath
 running_port = config.app.runningPort
 child_process = None
 
+def is_terminal_open_on_windows():
+    if platform.system() == 'Windows':
+        for proc in psutil.process_iter(['pid', 'name']):
+            if 'cmd.exe' in proc.info['name']:
+                return True
+        return False
+    elif platform.system() == 'Linux':
+        # Implementar la lógica para Linux si es necesario
+        pass
+    return False
+
 def run_command(command, options={}):
     if platform.system() == 'Windows':
-        command_args = 'cmd.exe /c start cmd.exe /k ' + command
+        if not is_terminal_open_on_windows():
+            command_args = 'cmd.exe /c ' + command
+        else:
+            command_args = 'cmd.exe /c ' + command + ' & exit'
     
     elif platform.system() == 'Linux':
         command_args = ['gnome-terminal', '--', 'bash', '-c', command]
