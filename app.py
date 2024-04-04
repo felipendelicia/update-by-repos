@@ -25,15 +25,7 @@ def run_command(command, options={}):
         print("Sistema operativo no soportado.")
         return None
 
-    process = subprocess.Popen(command_args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, **options)
-    stdout, stderr = process.communicate()
-
-    if stdout:
-        print(f"stdout: {stdout.decode('utf-8')}")
-    if stderr:
-        print(f"stderr: {stderr.decode('utf-8')}")
-    print(f"Proceso hijo finalizado con código de salida {process.returncode}")
-    return process
+    subprocess.Popen(command_args, **options)
 
 async def check_changes():
     try:
