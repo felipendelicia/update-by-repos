@@ -8,8 +8,7 @@ import base64
 import platform
 import shutil
 import psutil
-
-config = __import__('config')
+import config as config
 repo_path = config.app.repoPath
 running_port = config.app.runningPort
 child_process = None
