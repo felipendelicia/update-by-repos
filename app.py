@@ -15,7 +15,8 @@ child_process = None
 
 def run_command(command, args=[], options={}):
     if platform.system() == 'Windows':
-        command_args = ['start', 'cmd', '/k', command] + args
+        process = subprocess.Popen([command] + args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, **options)
+        return process
     elif platform.system() == 'Darwin':
         command_args = ['open', '-a', 'Terminal', command] + args
     elif platform.system() == 'Linux':
