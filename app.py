@@ -28,11 +28,11 @@ def run_command(command, options={}):
     process = subprocess.Popen(command_args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, **options)
     stdout, stderr = process.communicate()
 
-    if stdout:
+    """ if stdout:
         print(f"stdout: {stdout.decode('utf-8')}")
     if stderr:
         print(f"stderr: {stderr.decode('utf-8')}")
-    print(f"Proceso hijo finalizado con código de salida {process.returncode}")
+    print(f"Proceso hijo finalizado con código de salida {process.returncode}") """
     return process
 
 async def check_changes():
