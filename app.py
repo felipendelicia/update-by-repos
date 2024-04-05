@@ -103,23 +103,22 @@ async def loop():
     if not is_updated:
         print("UPDATES AVAILABLE #############################")
         kill_processes_on_port(config.app.runningPort)
-        time.sleep(5)
+        time.sleep(10)
         delete_build_folder()
-        time.sleep(5)
+        time.sleep(10)
         pull_app()
-        time.sleep(5)
+        time.sleep(10)
         build_app()
+        time.sleep(30)
+        init_app()
         time.sleep(20)
-        await start_app()
-    else:
-        await asyncio.sleep(10)
-        await loop()
 
 
 async def start_app():
     init_app()
     time.sleep(5)
-    await loop()
+    while True:
+        await loop()
 
 async def main():
     await start_app()
