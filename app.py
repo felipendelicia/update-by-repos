@@ -111,7 +111,7 @@ async def loop():
         build_app()
         time.sleep(30)
         init_app()
-        time.sleep(20)
+    time.sleep(20)
 
 
 async def start_app():
